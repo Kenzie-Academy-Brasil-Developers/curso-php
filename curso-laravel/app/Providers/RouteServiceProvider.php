@@ -29,9 +29,16 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+          $dirs = scandir(($path = base_path('routes/api')));
+          $dirsWithoutDot = array_diff($dirs, array('..', '.'));
+
+          foreach($dirsWithoutDot as $dir) {
+              if(file_exists($filepath = "{$path}/{$dir}")) {
+                Route::middleware('api')
+                    ->prefix('api')
+                    ->group($filepath);
+              }
+            }
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));

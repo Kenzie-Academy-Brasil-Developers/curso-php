@@ -29,7 +29,7 @@ class NewTransactionService {
     }
 
     $userPayer->balance = $userPayer->balance - $data['value'];
-    $userPayee->balance = $userPayer->balance + $data['value'];
+    $userPayee->balance = $userPayee->balance + $data['value'];
 
     $userPayer->save();
     $userPayee->save();
